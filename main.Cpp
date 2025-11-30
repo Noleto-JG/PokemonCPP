@@ -147,6 +147,7 @@ Pokemon* capturarPokemonFogo(){
 
 int main(){
     Pokemon* vetorTime[10];
+    int i = 0;
     string nome;
     int level;
     float pv;
@@ -162,7 +163,6 @@ int main(){
         {
             case 1:
                 // Lógica para criar Fogo (Opções 1 a 3 - Cadastro) [cite: 39, 40]
-                
                 cout << ">> Capturando Pokémon de Fogo..." << endl;
                 cin.ignore();
                 cout << "Insira o nome do pokemon!" << endl;
@@ -172,19 +172,56 @@ int main(){
                 cout << "Insira a defesa do pobre coitado!" << endl;
                 cin >> defesaBase;
                 cin >> pv;
-                vetorTime[0] = new PokemonFogo(nome, pv, ataqueBase, defesaBase);
+                i++;
+                vetorTime[i] = new PokemonFogo(nome, pv, ataqueBase, defesaBase);
                 break;
             case 2:
-                // Lógica para criar Água
-                cout << ">> Capturando Pokémon de Água..." << endl;
-                break;
-            case 3:
-                // Lógica para criar Planta
-                cout << ">> Capturando Pokémon de Planta..." << endl;
-                break;
+            // Lógica para criar Água
+            cout << ">> Capturando Pokémon de Água..." << endl;
+            cin.ignore(); // Limpa buffer
+            cout << "Insira o nome do pokemon!" << endl;
+            getline(cin, nome);
+            
+            cout << "Insira o ataque do pokemon!" << endl;
+            cin >> ataqueBase;
+            
+            cout << "Insira a defesa do pokemon!" << endl;
+            cin >> defesaBase;
+            
+            cout << "Insira os pontos de vida (PV)!" << endl;
+            cin >> pv;
+
+            i++;
+            // Não passamos a resistência, pois ela já é fixa (static) na classe
+            vetorTime[i] = new PokemonAgua(nome, pv, ataqueBase, defesaBase);
+            break;
+
+        case 3:
+            // Lógica para criar Planta
+            cout << ">> Capturando Pokémon de Planta..." << endl;
+            cin.ignore(); 
+            cout << "Insira o nome do pokemon!" << endl;
+            getline(cin, nome);
+            
+            cout << "Insira o ataque do pokemon!" << endl;
+            cin >> ataqueBase;
+            
+            cout << "Insira a defesa do pokemon!" << endl;
+            cin >> defesaBase;
+            
+            cout << "Insira os pontos de vida (PV)!" << endl;
+            cin >> pv;
+
+            i++;
+            // Não passamos a regeneração, pois ela já é fixa (static) na classe
+            vetorTime[i] = new PokemonPlanta(nome, pv, ataqueBase, defesaBase);
+            break;
             case 4:
                 // Percorrer vetor e chamar exibirDetalhes() [cite: 45]
                 cout << ">> Listando equipe..." << endl;
+                for (size_t i = 0; i < 10; i++){
+                    vetorTime[i]->exibirDetalhes();
+                }
                 break;
             case 5:
                 // Escolher pelo índice e aplicar curar() [cite: 48, 50]
@@ -203,6 +240,12 @@ int main(){
         }
     } while (flag == 1);
     
+    for (int i = 0; i < 10; i++) {
+    if (vetorTime[i] != nullptr) {
+        delete vetorTime[i]; 
+        vetorTime[i] = nullptr;
+    }
+}
 
     return 0;
 }
